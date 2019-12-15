@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Admin;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 class AuthController extends Controller
@@ -26,7 +27,6 @@ class AuthController extends Controller
         return response()->json(['success'=>$success], $this->successStatus);
     }
 
-
     public function login(){
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
             $user = Auth::user();
@@ -48,4 +48,5 @@ class AuthController extends Controller
             'message' => 'Successfully logged out'
         ]);
     }
+
 }

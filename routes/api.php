@@ -16,7 +16,20 @@ use Illuminate\Http\Request;
 Route::post('login', 'Api\AuthController@login');
 Route::post('register', 'Api\AuthController@register');
 Route::group(['middleware' => 'auth:api'], function(){
+
     Route::post('getUser', 'Api\AuthController@getUser');
     Route::get('logout', 'Api\AuthController@logout');
+
+    Route::resource('category', 'API\CategoryController');
+    Route::post('category/{id}','API\CategoryController@update');
+    Route::get('category/{id}/getsubcategories','API\CategoryController@showSubcategories');
+
+    Route::resource('category/{id}/subcategory', 'API\SubcategoryController');
+    Route::post('category/{id}/subcategory/{id1}','API\SubcategoryController@update');
+    Route::get('getcategory/{id}/subcategory/{id1}','API\SubcategoryController@getCategory');
+
+    Route::post('{id}/addproduct','API\ProductController@store');
+    Route::post('updateproduct/{id}','API\ProductController@update');
+    Route::resource('products','API\ProductController');
 
 });
