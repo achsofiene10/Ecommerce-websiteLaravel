@@ -21,7 +21,6 @@ class ProductController extends BaseController
 
     public function store(Request $request,$id)
     {
-        $input = $request->all();
         if ($request->has('img_product')) {
             // Get image file
             $image = $request->file('img_product');

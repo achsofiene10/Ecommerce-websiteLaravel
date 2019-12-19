@@ -9,7 +9,7 @@ class Subcategory extends Model
     protected $fillable = [
         'name_subcat','icon_subcat','idcat'
     ];
-    public function subcategory(){
+    public function category(){
         return $this->belongsTo('App\Category');
     }
     public function product(){

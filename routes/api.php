@@ -32,4 +32,10 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('updateproduct/{id}','API\ProductController@update');
     Route::resource('products','API\ProductController');
 
+    Route::post('paniers/{id}/{idproduct}','API\PanierController@store');
+    Route::get('paniers/{id}/products','API\PanierController@getAllproductsOfPanierAndTotal');
+    Route::post('paniers/{id}/Removeproduct/{idproduct}','API\PanierController@deleteProductByIdfromPanier');
+    Route::resource('paniers','API\PanierController');
+
+
 });
