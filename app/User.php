@@ -41,4 +41,7 @@ class User extends Authenticatable
     public function Panier(){
         return $this->hasOne('App\Panier');
     }
+    public function Commande(){
+        return $this->hasMany('App\Commande');
+    }
 }

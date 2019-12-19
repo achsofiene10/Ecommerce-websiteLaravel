@@ -93,7 +93,7 @@ class PanierController extends BaseController
         $Panier=Panier::where('id_user','=',$id)->first();
         $products=[];
         if(is_null($Panier)){
-            return $this->sendResponse($Panier, 'panier not found.');
+            return $this->sendError('Panier not found.');
         }
         else {
             foreach ($Panier->items as $productid) {
