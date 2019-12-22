@@ -137,4 +137,15 @@ class ProductController extends BaseController
         }
         return $this->sendResponse($Top, 'Top sellings retrieved successfully.');
     }
+
+    public function SearchProduct(Request $request)
+    {
+        $valueSearch=$request->get('word');
+        $Product=Product::where('title','LIKE','%'.$valueSearch.'%')->orWhere('details','LIKE','%'.$valueSearch.'%')->get();
+        if (($Product)->isEmpty())
+        {
+            return $this->sendError('search produt not found.');
+        }
+        return $this->sendResponse($Product, 'search retrieved successfully.');
+    }
 }

@@ -50,4 +50,6 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     Route::get('hotdeals/{Number}','API\ProductController@getHotdeals');
     Route::get('topselling/{Number}','API\ProductController@getTopsellings');
+
+    Route::post('searchproduct','API\ProductController@SearchProduct');
 });
