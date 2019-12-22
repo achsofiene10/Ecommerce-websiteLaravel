@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class ProductController extends BaseController
 {
@@ -91,5 +92,49 @@ class ProductController extends BaseController
     {
         $product->delete();
         return $this->sendResponse($product->toArray(), ' product deleted successfully.');
+    }
+
+    public function getHotdeals(Request $request,$id)
+    {
+        $Products=Product::all();
+        $ArrayP=$Products->toArray();
+        $ArrayMax=0;
+        $Hotsdeals=[];
+        $index=0;
+        for($i=0;$i<$id;$i++){
+        foreach ($ArrayP as $key=>$item)
+        {
+               if($item['remise']>$ArrayMax){
+                   $ArrayMax=$item['remise'];
+                   $index=$key;
+               }
+        }
+            array_push($Hotsdeals,$ArrayP[$index]);
+            unset($ArrayP[$index]);
+            $ArrayMax=0;
+        }
+        return $this->sendResponse($Hotsdeals, 'Hotdeals retrieved successfully.');
+    }
+
+    public function getTopsellings(Request $request,$id)
+    {
+        $Products=Product::all();
+        $ArrayP=$Products->toArray();
+        $ArrayMax=0;
+        $Top=[];
+        $index=0;
+        for($i=0;$i<$id;$i++){
+            foreach ($ArrayP as $key=>$item)
+            {
+                if($item['Nbrvente']>$ArrayMax){
+                    $ArrayMax=$item['Nbrvente'];
+                    $index=$key;
+                }
+            }
+            array_push($Top,$ArrayP[$index]);
+            unset($ArrayP[$index]);
+            $ArrayMax=0;
+        }
+        return $this->sendResponse($Top, 'Top sellings retrieved successfully.');
     }
 }

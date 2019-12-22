@@ -48,4 +48,6 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('wishlist','API\WishlistController');
     Route::post('wishlist/{id}/Removeproduct/{idproduct}','API\WishlistController@deleteProductByIdfromwishlist');
 
+    Route::get('hotdeals/{Number}','API\ProductController@getHotdeals');
+    Route::get('topselling/{Number}','API\ProductController@getTopsellings');
 });

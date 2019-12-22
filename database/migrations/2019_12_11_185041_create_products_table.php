@@ -24,6 +24,8 @@ class CreateProductsTable extends Migration
             $table->string('os_product');
             $table->string('Ram_product');
             $table->string('compagny');
+            $table->integer('remise');
+            $table->string('Nbrvente');
             $table->timestamps();
         });
     }

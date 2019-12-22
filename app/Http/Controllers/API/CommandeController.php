@@ -41,9 +41,15 @@ class CommandeController extends BaseController
             'adresse'=>$request->input('adresse'),
             'phone'=>$request->input('phone'),
         ]);
+        foreach ($products as $idproduct)
+        {
+            $product=Product::find($idproduct);
+            $product->Nbrvente=($product->Nbrvente)+1;
+            $product->save();
+        }
         $Panier->delete();
-
         return $this->sendResponse($commande->toArray(), 'Commande created successfully.');
+
     }
     /**
      * Display the specified resource.

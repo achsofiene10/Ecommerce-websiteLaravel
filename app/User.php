@@ -37,13 +37,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
     public function Panier(){
         return $this->hasOne('App\Panier');
     }
-
     public function Wishlist(){
-        return $this->hasOne('App\Wishlit');
+        return $this->hasOne('App\Wishlist');
     }
     public function Commande(){
         return $this->hasMany('App\Commande');
