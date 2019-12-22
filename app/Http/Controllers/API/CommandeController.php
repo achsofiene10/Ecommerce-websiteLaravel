@@ -44,10 +44,7 @@ class CommandeController extends BaseController
         $Panier->delete();
 
         return $this->sendResponse($commande->toArray(), 'Commande created successfully.');
-
-
     }
-
     /**
      * Display the specified resource.
      *

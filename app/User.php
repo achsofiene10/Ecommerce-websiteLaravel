@@ -41,6 +41,10 @@ class User extends Authenticatable
     public function Panier(){
         return $this->hasOne('App\Panier');
     }
+
+    public function Wishlist(){
+        return $this->hasOne('App\Wishlit');
+    }
     public function Commande(){
         return $this->hasMany('App\Commande');
     }

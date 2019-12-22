@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Product;
 use App\Subcategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Category;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 class CategoryController extends BaseController
@@ -101,5 +103,18 @@ class CategoryController extends BaseController
     {
         $category->delete();
         return $this->sendResponse($category->toArray(), ' category deleted successfully.');
+    }
+
+    public function getProductsBycategoryID($id)
+    {
+        $products = DB::table('products')
+            ->join('subcategories', 'subcategories.id', '=', 'products.idsouscat')
+            ->join('categories', 'subcategories.idcat', '=', 'categories.id')
+            ->where('categories.id', '=',$id)
+            ->get();
+        if ($products->isEmpty()){
+                return $this->sendError('products not found.');
+        }
+        return $this->sendResponse($products->toArray(), ' products retrieved successfully.');
     }
 }

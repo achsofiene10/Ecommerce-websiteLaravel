@@ -23,10 +23,12 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('category', 'API\CategoryController');
     Route::post('category/{id}','API\CategoryController@update');
     Route::get('category/{id}/getsubcategories','API\CategoryController@showSubcategories');
+    Route::get('category/{id}/getproducts','API\CategoryController@getProductsBycategoryID');
 
     Route::resource('category/{id}/subcategory', 'API\SubcategoryController');
     Route::post('category/{id}/subcategory/{id1}','API\SubcategoryController@update');
     Route::get('getcategory/{id}/subcategory/{id1}','API\SubcategoryController@getCategory');
+    Route::get('subcategory/{id}/getproducts','API\SubcategoryController@getProductsBysubcategoryID');
 
     Route::post('{id}/addproduct','API\ProductController@store');
     Route::post('updateproduct/{id}','API\ProductController@update');
@@ -42,6 +44,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('order/{id}/getproducts','API\CommandeController@getProductsOfOrder');
     Route::get('user/{iduser}/getorders','API\CommandeController@getAlluserOrders');
 
-
+    Route::post('wishlist/{idwishlist}/{idproduct}','API\WishlistController@store');
+    Route::resource('wishlist','API\WishlistController');
+    Route::post('wishlist/{id}/Removeproduct/{idproduct}','API\WishlistController@deleteProductByIdfromwishlist');
 
 });

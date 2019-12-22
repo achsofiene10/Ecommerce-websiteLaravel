@@ -62,8 +62,6 @@ class ProductController extends BaseController
 
     public function update(Request $request, $id)
     {
-
-
         $product=Product::find($id);
         if ($request->has('img_product')) {
             $image = $request->file('img_product');
@@ -81,9 +79,6 @@ class ProductController extends BaseController
         $product->status =  $request->input('status');
         $product->save();
         return $this->sendResponse($product->toArray(), 'product updated successfully.');
-
-
-
     }
 
     /**

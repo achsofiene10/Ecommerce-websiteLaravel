@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Category;
+use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Subcategory;
@@ -113,5 +114,14 @@ class SubcategoryController extends BaseController
         $subc=Subcategory::find($id1);
         $subc->delete();
         return $this->sendResponse($subc->toArray(), ' subcategory deleted successfully.');
+    }
+
+    public function getProductsBysubcategoryID($id)
+    {
+        $products=Product::where('idsouscat',$id)->get();
+        if ($products->isEmpty()){
+            return $this->sendError('products not found.');
+        }
+        return $this->sendResponse($products->toArray(), ' subcategory deleted successfully.');
     }
 }
