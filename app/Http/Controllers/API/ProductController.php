@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Product;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -113,6 +114,9 @@ class ProductController extends BaseController
             unset($ArrayP[$index]);
             $ArrayMax=0;
         }
+        if(empty($Hotsdeals)){
+            return $this->sendError('Top recommended not found.');
+        }
         return $this->sendResponse($Hotsdeals, 'Hotdeals retrieved successfully.');
     }
 
@@ -135,6 +139,9 @@ class ProductController extends BaseController
             unset($ArrayP[$index]);
             $ArrayMax=0;
         }
+        if(empty($Top)){
+            return $this->sendError('Top sellings not found.');
+        }
         return $this->sendResponse($Top, 'Top sellings retrieved successfully.');
     }
 
@@ -147,5 +154,33 @@ class ProductController extends BaseController
             return $this->sendError('search produt not found.');
         }
         return $this->sendResponse($Product, 'search retrieved successfully.');
+    }
+
+    public function getToprecommended(Request $request,$id)
+    {
+        $user=User::find($id);
+        $favouritesSub=$user->favs;
+        $Hotsdeals=[];
+        foreach ($favouritesSub as $idsub)
+        {
+            $Products=Product::where('idsouscat',$idsub)->get();
+            $ArrayP=$Products->toArray();
+            $ArrayMax=0;
+            $index=0;
+                foreach ($ArrayP as $key=>$item)
+                {
+                    if($item['remise']>$ArrayMax){
+                        $ArrayMax=$item['remise'];
+                        $index=$key;
+                    }
+                }
+                array_push($Hotsdeals,$ArrayP[$index]);
+        }
+        if(empty($Hotsdeals)){
+            return $this->sendError('Top recommended not found.');
+        }
+        return $this->sendResponse($Hotsdeals, 'Top recommended retrieved successfully.');
+
+
     }
 }

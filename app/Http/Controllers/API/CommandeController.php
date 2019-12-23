@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Commande;
 use App\Panier;
 use App\Product;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 
@@ -34,6 +35,7 @@ class CommandeController extends BaseController
     {
         $Panier=Panier::find($id);
         $products=$Panier->items;
+
         $commande= Commande::create([
             'id_user'=> $Panier->id_user,
             'price_com'=>$Panier->Price,
@@ -41,10 +43,16 @@ class CommandeController extends BaseController
             'adresse'=>$request->input('adresse'),
             'phone'=>$request->input('phone'),
         ]);
+        $user=User::find($Panier->id_user);
         foreach ($products as $idproduct)
         {
             $product=Product::find($idproduct);
             $product->Nbrvente=($product->Nbrvente)+1;
+            $tab=$user->favs;
+            if(!(in_array($product->idsouscat,$tab))){
+            array_push($tab,$product->idsouscat);
+            $user->favs=$tab;
+            $user->save();}
             $product->save();
         }
         $Panier->delete();
